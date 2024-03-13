@@ -1,6 +1,6 @@
 # Student Mental Health 
 
-This is a repository for the paper titled "Dynamic Clustering via Branched Deep Learning Models". 
+This is a repository for the paper titled "Dynamic clustering via branched deep learning enhances personalization of stress prediction from mobile sensor data" at Nature Scientific Report. 
 
 ## Relevant Resources
 
