@@ -59,6 +59,7 @@ For experiments on WESAD:
 ```
 python3 -m main personalize loocv
 ```
+Reference: The preprocessing pipeline was owned by: https://github.com/Emognition/dl-4-tsc 
 
 For inference:
 - The training function train_and_val function in src/utils/train_val_utils.py will return all the outputs including those from samples in validation set. 
