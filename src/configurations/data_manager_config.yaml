@@ -1,0 +1,67 @@
+student_life_var_binned_data:
+  # Two splitting strategy supported - Days and Time Delta of hours from the labels.
+  default_splitting_strategy: 'time_delta'
+  normalize_strategy: 'mean'
+  # Default student list for data manager.
+  student_list: [35]
+  feature_list: ['epoch_of_day', 'time_since_last_label' , 'time_to_next_label',
+                 'time_to_next_deadline', 'activity_inference_mode','audio_activity_inference_mode',
+                 'conv_duration_min_inferred_mode','phonecharge_duration_min_inferred_mode', 'phonelock_duration_min_inferred_mode',
+                 'dark_duration_min_inferred_mode']
+  # The covariates are flattened by taking the nearest value. If empty nothing will be flattened.
+  covariate_list: ['day_of_week',
+                   'sleep_rating_robust_sum',
+                   'hours_slept_robust_sum']
+  process_covariates_as_regular_features: False
+  label_list: ['stress_level_mode']
+  train_set_size: 60
+  val_set_size: 20
+  # Test set is here for just a consistency, it will contain what ever is remaining.
+  test_set_size: 20
+  time_deltas:
+    time_delta_behind_from_label_h: 24
+    time_delta_ahead_from_label_h: 0
+  adjust_labels_wrt_median: True
+  flatten_sequence_to_cols: False
+  sub_sampling:
+    sub_sample_count: 5
+    # This cannot be more than the actual sequence length.
+    output_sequence_len: 36
+  use_histogram: False
+  histogram:
+    epoch_of_day:
+      simple_aggregates: []
+      custom_aggregates: ['mode']
+    time_since_last_label:
+      simple_aggregates: []
+      custom_aggregates: ['time']
+    time_to_next_label:
+      simple_aggregates: []
+      custom_aggregates: ['time']
+    time_to_next_deadline:
+      simple_aggregates: []
+      custom_aggregates: ['time']
+    activity_inference_mode:
+      simple_aggregates: []
+      custom_aggregates: ['1', '2']
+#    activity_inference_inferred_feature:
+#      simple_aggregates: []
+#      custom_aggregates: ['0', '1', '2', '3']
+#    audio_activity_inference_mode:
+#      simple_aggregates: []
+#      custom_aggregates: ['0', '1', '2', '3']
+#    audio_activity_inference_inferred_feature:
+#      simple_aggregates: []
+#      custom_aggregates: ['0', '1', '2']
+    conv_duration_min_inferred_mode:
+      simple_aggregates: []
+      custom_aggregates: ['1']
+    phonecharge_duration_min_inferred_mode:
+      simple_aggregates: []
+      custom_aggregates: ['1']
+    phonelock_duration_min_inferred_mode:
+      simple_aggregates: []
+      custom_aggregates: ['1']
+#    dark_duration_min_inferred_mode:
+#      simple_aggregates: []
+#      custom_aggregates: ['1']

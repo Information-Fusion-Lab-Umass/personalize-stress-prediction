@@ -1,0 +1,28 @@
+#model_name:
+#  hyper_parameter_1: [List of things]
+#  hyper_parameter_2: [List of things]
+#  hyper_parameter_3: SomeThing
+
+data_file_name: "training_date_normalized_shuffled_splits_select_features_no_prev_stress_all_students.pkl"
+
+multitask_learner_auto_encoder:
+  alpha: [0.0001, 0.005]
+  beta: [1]
+  autoencoder_bottle_neck_feature_size: [128, 256]
+  autoencoder_num_layers: [1]
+  shared_hidden_layer_size: [256, 512]
+  user_dense_layer_hidden_size: [64, 128, 256]
+  num_classes: [3]
+  shared_layer_dropout_prob: [0]
+  user_head_dropout_prob: [0, 0.15]
+  learning_rate: [0.00005]
+  n_epochs: [300]
+  decay: [0.0001]
+  # Data
+  hitogram_seq_len: [24]
+  # Loss
+  reconstruction_loss_reduction: ['sum']
+  use_histogram: [True]
+  ordinal_regression_head: [False]
+  train_only_with_covariates: [False]
+  class_weights: [[0.95, 0.8, 1]]

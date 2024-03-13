@@ -1,0 +1,62 @@
+gru_d:
+  classes: 5
+  # This is actually the Number of sequences to be considered.
+  num_layers: 1440
+  x_mean: [0.0, 0.0, 10.0, 10.0, 0.0, 600.0, 0.0, 0.0, 8.0, 3.0]
+  learning_rate:  0.2
+  learning_rate_decay: 100
+  epochs: 20
+  student_list: [35]
+lstm_n_multitask:
+  use_histogram: True
+  autoencoder_bottle_neck_feature_size: 128
+  autoencoder_num_layers: 1
+  shared_hidden_layer_size: 256
+  user_dense_layer_hidden_size: 64
+  num_classes: 3
+  decay: 0.0001
+  shared_layer_dropout_prob: 0.00
+  user_head_dropout_prob: 0.00
+
+  lstm_classifier:
+    alpha: 0
+    beta: 1
+    learning_rate: 0.000005
+    n_epochs: 500
+    bidirectional: True
+  lstm_classifier_per_user:
+    alpha: 0
+    beta: 1
+    learning_rate: 0.000005
+    n_epochs: 300
+    bidirectional: True
+  autoencoder_classifier:
+      alpha: 0.0001
+      beta: 1
+      learning_rate: 0.000005
+      n_epochs: 500
+      bidirectional: True
+  multitask_lstm:
+    alpha: 0
+    beta: 1
+    learning_rate: 0.000001
+    n_epochs: 500
+    bidirectional: True
+  multitask_autoencoder:
+    alpha: 0.001
+    beta: 1
+    learning_rate: 0.000001
+    n_epochs: 500
+    bidirectional: True
+  multitask_covariate:
+    alpha: 0.001
+    beta: 1
+    learning_rate: 0.000001
+    n_epochs: 500
+    bidirectional: True
+  multitask_no_covariate:
+    alpha: 0.0001
+    beta: 1
+    learning_rate: 0.000001
+    n_epochs: 500
+    bidirectional: True
