@@ -4,7 +4,7 @@ This is a repository for the paper titled "Dynamic clustering via branched deep 
 
 ## Relevant Resources
 
-- [StudentLife study.](https://drive.google.com/open?id=171iN3Zis7SKJ-WqXzNmrhdEJut7aFqNS)
+- [StudentLife study.](https://studentlife.cs.dartmouth.edu/)
 - [Extensive literature review on other psychology related papers for domain knowledge.](https://drive.google.com/open?id=1FyUFo0b3cYQv8KJJng-wvpgk_Uk53VI0)
 - [Personalized Student Stress Prediction with Deep Multitask Network](https://arxiv.org/abs/1906.11356)
 
@@ -32,6 +32,14 @@ For grouping, this have to be done before training or inference:
 
 
 A sample fake data in sample_input.py indicate the desired format. 
+
+## Data Preparation
+The raw data can be downloaded from [StudentLife study.](https://studentlife.cs.dartmouth.edu/), and the preprocessed data as described in the paper can be downloaded from the '[Releases](https://github.com/Information-Fusion-Lab-Umass/personalized-stress-prediction/releases/tag/processed_data_and_model_checkpoint)' of this repo. 
+
+After download and unzip the data, place the file under the following path from the root directory:
+```
+data/training_data/shuffled_splits/training_date_normalized_shuffled_splits_select_features_no_prev_stress_all_students.pkl
+```
 
 ## Training and Output
 For training and validation:  
@@ -64,4 +72,7 @@ Reference: The preprocessing pipeline for WESAD is owned by: https://github.com/
 For inference:
 - The training function train_and_val function in src/utils/train_val_utils.py will return all the outputs including those from samples in validation set. 
 - The output and evaluation scores are saved under data/cross_val_scores/  
-- include keyword "test_only" in the job_session_name, and set the validation_type also to "test_only". 
+- include keyword "test_only" in the job_session_name, and set the validation_type also to "test_only".
+
+#### Note
+The released checkpoint contains models trained on each of the 5 folds, with LSTM as autoencoder, 3 branches, and 1 output head for each subject. For the best practical usage, please leveraging the model's code, tune the configuration setting, and train and test on the targeting dataset(s). 
