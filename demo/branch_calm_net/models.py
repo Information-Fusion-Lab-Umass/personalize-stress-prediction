@@ -12,6 +12,8 @@ class MultitaskAutoencoder(nn.Module):
         self.with_generic_head = False
         self.use_covariates = use_covariates
         params['shared_in_size'] += params['covariate_size'] if use_covariates else 0
+
+        self.branch_evolve_track = dict()
         
         self.params = params
         self.autoencoder = autoencoder(
@@ -137,6 +139,15 @@ class MultitaskAutoencoder(nn.Module):
         self.downstream_layers = downstream_layers
 
 # ======== TRAIN SCRIPT ============================================================
+    def record_branch(self, return_only=False):
+        if return_only:
+            return self.branch_evolve_track
+        
+        # record current branching probabilities
+        for id_ in self.branching.probabilities:
+            if self.branch_evolve_track.get(id_) is None:
+                self.branch_evolve_track[id_] = list()
+            self.branch_evolve_track[id_].append([p.item() for p in self.branching.probabilities[id_].data])
     
     def fit(
         self,
@@ -198,6 +209,7 @@ class MultitaskAutoencoder(nn.Module):
                 train_it.append(iterations)
 
                 iterations += 1
+            self.record_branch()
             
             # val
             if val_x is not None:
