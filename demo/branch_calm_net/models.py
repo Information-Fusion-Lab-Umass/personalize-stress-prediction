@@ -2,6 +2,7 @@ import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
+import numpy as np
 
 from branch_calm_net.layers import *
 
@@ -159,7 +160,8 @@ class MultitaskAutoencoder(nn.Module):
         val_x=None,
         val_y=None,
         val_ids=None,
-        val_cov=None
+        val_cov=None,
+        loss_mov_avg=True
     ):
         # Simple training script
         train_loader = DataLoader(
@@ -224,6 +226,15 @@ class MultitaskAutoencoder(nn.Module):
                     total_loss = classification_loss + reconstruction_loss
                     val_loss.append(total_loss.cpu().detach().item())
                     val_it.append(iterations)
+        
+        # if check running average of loss
+        if loss_mov_avg:
+            new_train_loss, new_val_loss = list(), list()
+            for i in range(1, len(train_loss)+1):
+                new_train_loss.append(np.mean(train_loss[:i]))
+            for i in range(1, len(val_loss)+1):
+                new_val_loss.append(np.mean(val_loss[:i]))
+            return new_train_loss, train_it, new_val_loss, val_it
         
         return train_loss, train_it, val_loss, val_it
 
