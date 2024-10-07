@@ -23,7 +23,7 @@ def get_default_config(device):
             'covariate_size': 4, # number of covariates
             'shared_in_size': 128, # init bottleneck size
             'shared_hidden_size': 256,
-            'num_branches': 5, # when equal to 1, it is equivalent to CALM_Net
+            'num_branches': 3, # when equal to 1, it is equivalent to CALM_Net
             'groups': subject_group,
             'heads_hidden_size': 64,
             'num_classes': 3
@@ -57,11 +57,11 @@ def get_samples(ids, example_idx=[0]):
             curr_fns = np.array([fn for fn in all_fns if '{}_{}_'.format(id_, l) in fn])[example_idx]
             for curr_fn in curr_fns:
                 # load data
-                with open('samples/{}'.format(curr_fn), 'rb') as f:
+                with open('data/samples/{}'.format(curr_fn), 'rb') as f:
                     sample = pickle.load(f)['signal']
                 
                 # load covariates
-                with open('portraits/{}'.format(id_), 'rb') as f:
+                with open('data/portraits/{}'.format(id_), 'rb') as f:
                     cov = pickle.load(f)
                 
                 sample_x.append(sample)
