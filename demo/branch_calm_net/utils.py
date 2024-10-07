@@ -69,3 +69,41 @@ def get_samples(ids, example_idx=[0]):
                 sample_ids.append(id_)
                 sample_cov.append(cov)
     return torch.tensor(sample_x).float(), torch.tensor(sample_y).long(), sample_ids, torch.tensor(sample_cov).float()
+
+def gumbel_softmax(mat, tau=0.1, decay=True):
+    if not decay:
+        return np.array(mat), [0 for _ in range(len(mat))]
+    ts = list()
+    res = list()
+    for i in range(len(mat)):
+        ts.append(tau)
+        v = np.exp(np.log(mat[i]) / tau)
+        res.append(v / np.sum(v))
+        tau = max(0.01, tau*0.98)
+    res = np.array(res)
+    print("Max:", np.max(res), "Min:", np.min(res))
+    return res, ts
+
+# process
+def check_branch_evolve(model, sub_ind="0", tau=0.1, decay=True, cmap='jet', step_size=3):
+    # get branching evolve parameters
+    branches = model.record_branch(return_only=True)[sub_ind]
+
+    # transform
+    mat, ts = gumbel_softmax(branches, tau=tau, decay=decay)
+    inds = [i for i in range(len(mat)) if i % step_size == 0]
+    mat = mat[inds]
+
+    # heat map
+    plt.figure(figsize = (15,5))
+    plt.imshow(mat.T, cmap=cmap)
+    tick_list = np.linspace(0, 1.0, 5)
+    cb = plt.colorbar(orientation='horizontal', aspect=50, location="bottom", pad=0.4)
+    cb.ax.tick_params(labelsize=22) 
+    cb.ax.set_title('Colorbar Reference')
+    cb.ax.set_xlabel('Branching Probability from 0 to 1')
+#     cb.ax.legend()
+#     cb.ax.set_yticklabels(tick_list)
+    plt.xlabel("Epochs")
+    plt.ylabel("Branching ID")
+    plt.show()
