@@ -16,6 +16,15 @@ This is a repository for the paper titled "Dynamic clustering via branched deep 
 - Dr. Tauhidur Rahman (trahman@ucsd.edu)
 - Dr. Madalina Fiterau (mfiterau@cs.umass.edu)
 
+## Dependencies
+```
+- python version > 3.8
+- Pytorch (main dependency): install instruction (stable version): https://pytorch.org/get-started/locally/ 
+- einops (for tensor reshape): pip install einops
+- matplotlib (for plot): pip install matplotlib
+- tqdm (for print progress bar in log): pip install tqdm
+```
+
 ## Input format
 For each sample, the data needed are:
 - ID of the subject that this sample belongs to (format: id_month_day_time)
